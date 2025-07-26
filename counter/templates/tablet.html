@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medicine Dose Tracker</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f7fff7;
+  padding-top: 80px; /* Added space for the fixed navbar */
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0077b6; /* professional blue */
+  padding: 20px;
+  color: white;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  margin: 0;
+}
+
+nav a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Move Signout link slightly to the left */
+nav a:last-child {
+  margin-right: 30px;  /* Reduce space between Signout and previous link */
+}
+
+.container {
+  display: flex;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.input-section {
+  flex: 1;
+  background-color: #ffffff;
+  border: 2px solid #28a745;
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.input-section h2 {
+  color: #28a745;
+  margin-bottom: 1rem;
+}
+
+.input-section input,
+.input-section select,
+.input-section button {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: 1px solid #28a745;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.input-section button {
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.input-section button:hover {
+  background-color: #218838;
+}
+
+.list-section {
+  flex: 2;
+  background-color: #ffffff;
+  border: 2px solid #28a745;
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.tablet-item {
+  border: 1px solid #c3e6cb;
+  background-color: #e2f5e9;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+}
+
+.tablet-item strong {
+  color: #155724;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>AI health Guardian</h1>
+    <nav>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'dashboard' %}">dashboard</a>
+      <a href="{% url 'home' %}">signout</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    
+    <!-- Input Section -->
+    <div class="input-section">
+      <h2>Enter Tablet Details</h2>
+
+      <div id="initialInput">
+        <input type="number" id="numberOfTablets" placeholder="How many types of tablets?" min="1">
+        <button onclick="generateTabletInputs()">Next</button>
+      </div>
+
+      <form id="tabletForm" style="display:none;">
+        <div id="tabletInputs"></div>
+        <button type="button" onclick="saveTablets()">Save Tablets</button>
+      </form>
+    </div>
+
+    <!-- Tablet List Section -->
+    <div class="list-section">
+      <h2 style="color:#28a745;">Your Tablet List</h2>
+      <div id="tabletList"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // Generate input fields
+    function generateTabletInputs() {
+      const number = parseInt(document.getElementById('numberOfTablets').value);
+      const tabletInputs = document.getElementById('tabletInputs');
+      tabletInputs.innerHTML = '';
+    
+      for (let i = 0; i < number; i++) {
+        tabletInputs.innerHTML += `
+          <input type="text" id="tabletName${i}" placeholder="Tablet Name ${i+1}" required>
+          <input type="number" id="tabletCount${i}" placeholder="Number of Tablets" required min="1">
+          <select id="dosageType${i}">
+            <option value="full">Full Dosage</option>
+            <option value="half">Half Dosage</option>
+          </select>
+        `;
+      }
+    
+      document.getElementById('tabletForm').style.display = 'block';
+      document.getElementById('initialInput').style.display = 'none';
+    }
+    
+    // Save tablets to backend
+    function saveTablets() {
+      const number = parseInt(document.getElementById('numberOfTablets').value);
+      let tabletsData = [];
+    
+      for (let i = 0; i < number; i++) {
+        const name = document.getElementById(`tabletName${i}`).value.trim();
+        const count = parseInt(document.getElementById(`tabletCount${i}`).value);
+        const dosage = document.getElementById(`dosageType${i}`).value;
+    
+        if (name && count > 0) {
+          let perDayConsumption = dosage === 'full' ? 1 : 0.5;
+          let totalDays = Math.ceil(count / perDayConsumption);
+    
+          let today = new Date();
+          let finishDate = new Date(today);
+          finishDate.setDate(finishDate.getDate() + totalDays);
+    
+          tabletsData.push({
+            name: name,
+            count: count,
+            dosage: dosage,
+            startDate: today.toISOString().split('T')[0],
+            finishDate: finishDate.toISOString().split('T')[0]
+          });
+        }
+      }
+    
+      // Fetch POST request
+      fetch("{% url 'save_tablets' %}", {   
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ tablets: tabletsData })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.message);
+        alert('Tablets saved successfully!');
+        document.getElementById('tabletForm').style.display = 'none';
+        document.getElementById('initialInput').style.display = 'block';
+        document.getElementById('numberOfTablets').value = '';
+        updateTabletList(tabletsData);   // 🔥 Update list
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error saving tablets.');
+      });
+    }
+    
+    // Update tablet list in frontend
+    function updateTabletList(tablets) {
+      const listDiv = document.getElementById('tabletList');
+      listDiv.innerHTML = '';
+    
+      tablets.forEach((tablet) => {
+        listDiv.innerHTML += `
+          <div class="tablet-item">
+            <strong>Name:</strong> ${tablet.name} <br>
+            <strong>Number of Tablets:</strong> ${tablet.count} <br>
+            <strong>Dosage Type:</strong> ${tablet.dosage === 'full' ? 'Full Dosage' : 'Half Dosage'} <br>
+            <strong>Started Date:</strong> ${tablet.startDate} <br>
+            <strong>Finished Date:</strong> ${tablet.finishDate}
+          </div>
+        `;
+      });
+    }
+    
+    // CSRF token fetcher
+    function getCSRFToken() {
+      let cookieValue = null;
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith('csrftoken=')) {
+          cookieValue = cookie.substring('csrftoken='.length, cookie.length);
+          break;
+        }
+      }
+      return cookieValue;
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'visioncheck.css' %}">
+</head>
+<body>
+    <div class="heading">
+        <h1>Vision Test</h1>
+        <p>Test your eyesight and estimate your vision power.</p>
+    </div>
+
+    <header>
+        <h1>AI health Guardian</h1>
+        <nav>
+          <a href="{% url 'home' %}">Home</a>
+          <a href="{% url 'dashboard' %}">dashboard</a>
+          <a href="{% url 'home' %}">signout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div class="content">
+
+            <div class="image-display">
+                <img id="letterImage" src="/static/images/size_6_60(1).png" alt="Letter" style="width: 80%; height: 5%;" />
+                <p>Can you read this? <span id="currentSizeLabel">6/60</span></p>
+            </div>
+
+            <div class="buttons">
+                <button id="yesButton" onclick="handleUserResponse(true)">Yes</button>
+                <button id="noButton" onclick="handleUserResponse(false)">No</button>
+            </div>
+
+            <div id="result" class="result" style="display:none;">
+                <h2>Test Result</h2>
+                <p id="condition"></p>
+                <p id="estimatedPower"></p>
+                <button onclick="restartTest()">Restart Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'visioncheck.js' %}"></script>
+</body>
+</html>

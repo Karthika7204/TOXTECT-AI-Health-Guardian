@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI health Guardian - Nutrition Scanner</title>
+
+  <!-- Favicon and CSS -->
+  <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml" />
+  <link rel="stylesheet" href="{% static 'newstyle.css' %}" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+
+
+<body id="top">
+  
+  <!-- Hero Section -->
+  <section class="hero" style="background-image: url('/static/images/bg.jpg');"></section>
+
+  <!-- Start Scanning Button -->
+  <div class="center-button-container">
+    <a href="{% url 'dashboard' %}" class="btn">Get Started</a>
+  </div>
+
+  <!-- Navigation Header -->
+  <header class="header" data-header>
+    <div class="container">
+      <a href="#" class="logo">
+        AI Health Guardian<span class="span">.</span>
+      </a>
+      <nav class="navbar" data-navbar>
+        <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="#top" class="navbar-link" data-nav-link>Home</a></li>
+          <li class="navbar-item"><a href="#about" class="navbar-link" data-nav-link>About Us</a></li>
+        </ul>
+      </nav>
+
+      <a href="{% url 'login' %}" class="btn btn-primary">Sign In</a>
+
+      <button class="nav-toggle-btn" aria-label="open menu" data-nav-toggler>
+        <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+      </button>
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+
+
+  <main>
+    <article>
+
+      <!-- About Section -->
+      <section class="section about" aria-label="about" id="about" data-section>
+        <div class="container">
+          <div class="about-banner img-holder" style="--width: 470; --height: 580;">
+            <img src="{% static 'images/health.jpg' %}" width="470" height="580" loading="lazy" alt="about banner" class="img-cover" />
+          </div>
+          <div class="about-content">
+            <p class="section-subtitle">Welcome to AI health Guardian</p>
+            <h2 class="h2 section-title">Scan food and monitor your nutritional intake with ease.</h2>
+            <p class="section-text">Your AI-powered nutrition tracker for a healthier lifestyle.</p>
+            <p class="section-text">AI health Guardian helps you uncover hidden ingredients and provides detailed nutritional insights to empower smarter food choices.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Healthy Food Info Section -->
+      <section class="section">
+        <div class="container nutrition-info">
+
+          <div class="nutrition-text">
+            <p class="hero-subtitle">Why is healthy food important?</p>
+            <h1 class="food-title">
+              Healthy foods provide vital<br />
+              nutrients like vitamins,<br />
+              minerals, and antioxidants,<br />
+              essential for body functions,<br />
+              immune support,<br />
+              and energy.
+            </h1>
+          </div>
+
+          <div class="nutrition-image">
+            <img src="{% static 'images/phone-image.png' %}" alt="Nutrition Scanner Phone" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Section -->
+      <footer class="footer">
+        <div class="footer-top section" data-section>
+          <div class="container">
+            <div class="footer-list">
+              <p class="footer-list-title">Subscribe Newsletter</p>
+              <p class="footer-list-text">Track your daily nutrition effortlessly and stay informed about what you eat.</p>
+            </div>
+
+            <ul class="footer-list">
+              <li><p class="footer-list-title">Help Links</p></li>
+              <li><a href="#" class="footer-link">Privacy Policy</a></li>
+              <li><a href="#" class="footer-link">Discussion</a></li>
+              <li><a href="#" class="footer-link">Terms & Conditions</a></li>
+              <li><a href="#" class="footer-link">Customer Support</a></li>
+            </ul>
+
+            <ul class="footer-list">
+              <li><p class="footer-list-title address-title">Location</p></li>
+              <li>
+                <address class="address">
+                  176 W Street<br />
+                  Bengaluru 60
+                </address>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="container">
+            <p class="copyright">
+              &copy; 2024 AI health Guardian. Made with <ion-icon name="heart" aria-hidden="true"></ion-icon> for you
+            </p>
+            <ul class="footer-bottom-list">
+              <li class="footer-bottom-item"><a href="#" class="footer-bottom-link">Terms of Service</a></li>
+              <li class="footer-bottom-item"><a href="#" class="footer-bottom-link">Privacy Policy</a></li>
+              <li class="footer-bottom-item"><a href="#" class="footer-bottom-link">Sitemap</a></li>
+              <li class="footer-bottom-item"><a href="#" class="footer-bottom-link">Security</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+
+      <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+        <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+      </a>
+    </article>
+  </main>
+
+  <!-- Scripts -->
+  <script src="{% static 'script.js' %}" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

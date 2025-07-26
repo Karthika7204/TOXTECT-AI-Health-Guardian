@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Attack Risk Prediction</title>
+</head>
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4); /* soft pinkish-red gradient */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #b30000; /* deep red */
+    padding: 20px;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav a {
+    margin-right: 50px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.container, .result {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    width: 400px;
+    max-width: 90%;
+    margin: 20px;
+    margin-top: 150px;
+}
+
+h1 {
+    text-align: center;
+    color: #fbf9f9;
+    margin-bottom: 20px;
+}
+
+h2,h3 {
+    text-align: center;
+    color: #b30000; /* deep red for headings */
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #555;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    background: #b30000; /* red button */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #cc0000; /* slightly lighter red on hover */
+}
+
+.result {
+    display: none; /* initially hidden */
+    text-align: center;
+}
+
+.result ul {
+    text-align: left;
+    margin-top: 10px;
+}
+
+#predict-again-btn {
+    background-color: #e53935; /* bright red for predict again */
+}
+
+#predict-again-btn:hover {
+    background-color: #c62828;
+}
+</style>
+
+<body>
+
+    <header>
+        <h1>AI health Guardian</h1>
+        <nav>
+          <a href="{% url 'home' %}">Home</a>
+          <a href="{% url 'dashboard' %}">dashboard</a>
+          <a href="{% url 'home' %}">signout</a>
+        </nav>
+    </header>
+
+    <div class="container" id="form-container">
+        <h2>Heart Attack Risk Prediction</h2>
+        <form method="post" id="prediction-form">
+            {% csrf_token %}
+            <label>Age:</label>
+            <input type="number" name="age" required>
+
+            <label>Gender:</label>
+            <select name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label>Diabetes (1 for Yes, 0 for No):</label>
+            <input type="number" name="diabetes" min="0" max="1" required>
+
+            <label>Hypertension (1 for Yes, 0 for No):</label>
+            <input type="number" name="hypertension" min="0" max="1" required>
+
+            <label>Obesity (1 for Yes, 0 for No):</label>
+            <input type="number" name="obesity" min="0" max="1" required>
+
+            <label>Smoking (1 for Yes, 0 for No):</label>
+            <input type="number" name="smoking" min="0" max="1" required>
+
+            <label>Alcohol Consumption (1 for Yes, 0 for No):</label>
+            <input type="number" name="alcohol" min="0" max="1" required>
+
+            <label>Physical Activity (1 for Yes, 0 for No):</label>
+            <input type="number" name="physical_activity" min="0" max="1" required>
+
+            <label>Stress Level (0-4):</label>
+            <input type="number" name="stress" min="0" max="4" required>
+
+            <label>Healthcare Access (1 for Yes, 0 for No):</label>
+            <input type="number" name="healthcare_access" min="0" max="1" required>
+
+            <label>Heart Attack History (1 for Yes, 0 for No):</label>
+            <input type="number" name="heart_attack_history" min="0" max="1" required>
+
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+
+    {% if prediction %}
+    <div class="result" id="result-container" style="display: block;">
+        <h2>Prediction: {{ prediction }}</h2>
+        <h3>Lifestyle Suggestions:</h3>
+        <ul>
+            {% for suggestion in suggestions %}
+                <li>{{ suggestion }}</li>
+            {% endfor %}
+        </ul>
+        <button id="predict-again-btn">Predict Again</button>
+    </div>
+
+    <script>
+        // Hide the form initially
+        document.getElementById('form-container').style.display = 'none';
+
+        // Handle "Predict Again" button
+        document.getElementById('predict-again-btn').addEventListener('click', function() {
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('form-container').style.display = 'block';
+        });
+    </script>
+    {% endif %}
+
+</body>
+</html>

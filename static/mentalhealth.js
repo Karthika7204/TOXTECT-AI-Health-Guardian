@@ -1,0 +1,132 @@
+const chatContainer = document.getElementById('chat-container');
+  const userInput = document.getElementById('user-input');
+  const sendBtn = document.getElementById('send-btn');
+
+  const questions = [
+    "How do you feel today?",
+    "How energetic are you?",
+    "How is your sleep?",
+    "Are you feeling stressed?",
+    "How social do you feel?",
+    "Are you feeling optimistic about the future?",
+    "How focused were you today?",
+    "How physically healthy do you feel?",
+    "How relaxed are you feeling?",
+    "How satisfied are you with your day?"
+  ];
+
+  let index = 0;
+  const answers = [];
+
+  function addBotMessage(text) {
+    const msg = document.createElement('div');
+    msg.className = 'message bot-message';
+    msg.innerHTML = `
+      <div class="bubble bot-bubble">
+        <img src="{% static 'images/bot.jpg' %}" alt="Bot Icon">
+        ${text}
+      </div>`;
+    chatContainer.appendChild(msg);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  function addUserMessage(text) {
+    const msg = document.createElement('div');
+    msg.className = 'message user-message';
+    msg.innerHTML = `
+      <div class="bubble user-bubble">
+        ${text}
+        <img src="{% static 'images/user.jpg' %}" alt="User Icon">
+      </div>`;
+    chatContainer.appendChild(msg);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  function handleSend() {
+    const val = userInput.value.trim();
+    if (val === '' || isNaN(val) || Number(val) < 1 || Number(val) > 5) {
+      alert('Please enter a number between 1 and 5 only.');
+      userInput.value = '';
+      return;
+    }
+    addUserMessage(val);
+    answers.push(Number(val));
+    userInput.value = '';
+    if (index < questions.length) {
+      setTimeout(() => {
+        addBotMessage(questions[index]);
+        index++;
+      }, 500);
+    } else {
+      setTimeout(showResult, 500);
+    }
+  }
+
+  function showResult() {
+  const totalQuestions = 10; // as per your model
+  const maxScore = totalQuestions * 5;
+  const score = answers.reduce((a, b) => a + b, 0);
+  const percentageScore = (score / maxScore) * 100;
+
+  let mentalState = '';
+  let suggestions = [];
+
+  if (percentageScore >= 80) {
+    mentalState = "Excellent Mental Health";
+    suggestions = [
+      "Keep up your healthy habits!",
+      "Continue engaging in activities that bring you joy.",
+      "Consider helping others—it can boost your mood even further."
+    ];
+  } else if (percentageScore >= 60) {
+    mentalState = "Good Mental Health";
+    suggestions = [
+      "You’re doing well! Maybe try adding more variety to your routine.",
+      "Consider practicing mindfulness or meditation.",
+      "Engage in light physical activities like yoga or walking."
+    ];
+  } else if (percentageScore >= 40) {
+    mentalState = "Moderate Mental Health";
+    suggestions = [
+      "Consider talking to a trusted friend or family member about your feelings.",
+      "Spend some time in nature—it can be very uplifting.",
+      "Try journaling to process your emotions and thoughts."
+    ];
+  } else {
+    mentalState = "Needs Attention";
+    suggestions = [
+      "Please consider seeking support from a mental health professional.",
+      "Practice deep breathing or grounding techniques to reduce stress.",
+      "Connect with supportive people in your life."
+    ];
+  }
+
+  // Display each output separately as bot messages
+  addBotMessage(`<strong>Assessment Complete!</strong>`);
+  addBotMessage(`<strong>Score:</strong> ${percentageScore.toFixed(1)}%`);
+  addBotMessage(`<strong>Mental State:</strong> ${mentalState}`);
+
+  let suggestionsList = `<strong></strong><ul>`;
+  suggestions.forEach(suggestion => {
+    suggestionsList += `<li>${suggestion}</li>`;
+  });
+  suggestionsList += `</ul>`;
+
+  addBotMessage(suggestionsList);
+}
+
+  sendBtn.addEventListener('click', handleSend);
+
+  userInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      handleSend();
+    }
+    // Prevent invalid keys
+    if (!'12345Backspace'.includes(e.key)) {
+      e.preventDefault();
+    }
+  });
+
+  // Start chat
+  addBotMessage(questions[index]);
+  index++;

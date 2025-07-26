@@ -1,0 +1,144 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #d3d3d3;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0077b6; /* professional blue */
+    padding: 20px;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav a {
+    margin-right: 50px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+  h2{
+      margin-top: 80px;
+  }
+  .chat-container {
+    background: #eeeeee;
+    width: 400px;
+    height: 60vh;
+    border-radius: 10px;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    max-width: 80%;
+  }
+
+  .bot-message {
+    justify-content: flex-start;
+  }
+
+  .user-message {
+    justify-content: flex-end;
+    align-self: flex-end;
+  }
+
+  .bubble {
+    background-color: #808080; /* changed from green to grey */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+  }
+
+  .bot-bubble {
+      background-color: #5e5d5d;
+      color: white;
+      margin-left: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+  }
+
+  .user-bubble {
+      background-color: #007bff;
+      color: white;
+      margin-right: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+  }
+
+  .bubble img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  }
+
+  .input-container {
+    width: 400px;
+    margin-top: 10px;
+    display: flex;
+    background: #fff;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  input[type="number"] {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-radius: 20px;
+    background-color: #f7f7f7;
+    text-align: center;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #000000; /* changed from green to grey */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #333333; /* darker grey on hover */
+  }

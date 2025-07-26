@@ -1,0 +1,70 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toxtect - Nutrition Scanner</title>
+  <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo">AI health Guardian</div>
+    <div class="nav-buttons">
+      <button onclick="location.href='{% url 'home' %}'">Home</button>
+      <button onclick="location.href='{% url 'dashboard' %}'">Dashboard</button>
+      <button onclick="location.href='{% url 'home' %}'">Sign Out</button>
+    </div>
+  </div>
+
+  
+  <!-- Scanners Container -->
+  <div class="main-wrapper">
+
+    <!-- Row 1 -->
+    <div class="scanner-row">
+      <div class="scanner-card" style="background-image: url('/static/images/health-backimage.png');">
+        <button class="scanner-button" onclick="location.href='{% url "scan" %}'">Food Scanner</button>
+      </div>
+      <div class="scanner-card" style="background-image: url('/static/images/pills.jpg');">
+        <button class="scanner-button" onclick="location.href='{% url "tablet_tracker" %}'">Tablet Tracker</button>
+      </div>
+      <div class="scanner-card" style="background-image: url('/static/images/vision.jpg');">
+        <button class="scanner-button" onclick="location.href='{% url "vision_check" %}'">Vision Checker</button>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="scanner-row">
+      <div class="scanner-card" style="background-image: url('/static/images/cosmetics-backimage.png');">
+        <button class="scanner-button" onclick="location.href='{% url "process_image" %}'">Cosmetics Scanner</button>
+      </div>
+      <div class="scanner-card" style="background-image: url('/static/images/chatbot.jpg');">
+        <button class="scanner-button" onclick="location.href='{% url "start_assessment" %}'">Mind Mate</button>
+      </div>
+      <div class="scanner-card" style="background-image: url('/static/images/symptons.png');">
+        <button class="scanner-button" onclick="location.href='{% url "health" %}'">Symptoms Prediction</button>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="scanner-row">
+      <div class="scanner-card" style="background-image: url('/static/images/Bmi-backimage.jpg');">
+        <button class="scanner-button" onclick="location.href='{% url "bmi_predictor" %}'">BMI Food Planner</button>
+      </div>
+      <div class="scanner-card" style="background-image: url('/static/images/heart_attack.jpg');">
+        <button class="scanner-button" onclick="location.href='{% url "predict_heart_attack" %}'">Heart attack prediction</button>
+      </div>
+      <div class="scanner-card" style="background-image: url('/static/images/calories-backimage.jpg');">
+        <button class="scanner-button" onclick="location.href='{% url "calories" %}'">Calories Burn Predictor</button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

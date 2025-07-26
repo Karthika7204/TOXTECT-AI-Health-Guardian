@@ -1,0 +1,175 @@
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f9f8;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #8B4513; /* chocolate navbar */
+  padding: 15px 30px;
+  color: white;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.navbar .logo {
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.navbar button {
+  background: none;
+  border: 2px solid white;
+  color: white;
+  font-size: 16px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.navbar button:hover {
+  background-color: white;
+  color: #8B4513; /* chocolate hover */
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 100px;
+  width: 100%;
+  gap: 40px;
+  padding: 20px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 500px;
+  height: 300px;
+  background-image: url('/static/images/food_container.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.results-container {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  background-image: url('/static/images/food_container.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.form-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  margin-left: 100px;
+  color: #5C3317; /* darker chocolate title */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  background-color: #A0522D; /* lighter chocolate */
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 40%;
+}
+
+.custom-file-upload:hover {
+  background-color: #5C3317; /* dark chocolate hover */
+}
+
+.file-name {
+  font-size: 16px;
+  color: #5C3317; /* chocolate text */
+  margin-left: 10px;
+  padding: 5px;
+}
+
+button {
+  background-color: #A0522D; /* chocolate button */
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5C3317; /* darker chocolate hover */
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #8B4513; /* chocolate spinner */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+h2, h3 {
+  color: #5C3317; /* chocolate headings */
+}
+
+ul {
+  text-align: left;
+}
+

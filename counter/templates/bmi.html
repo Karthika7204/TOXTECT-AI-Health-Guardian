@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cosmetics Analyzer</title>
+  
+</head>
+<style>
+  body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f9f8;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0077b6; /* professional blue */
+    padding: 20px;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav a {
+    margin-right: 50px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+
+}
+
+nav a:hover {
+    text-decoration: none;
+    color:#000000;
+}
+
+.content-wrapper {
+  display: flex;
+  gap: 50px; /* big gap between form and results */
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.form-container {
+  background-color: #e0f7fa;
+  padding: 30px;
+  border-radius: 20px;
+  height: 350px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 5px solid #00bfa5;
+  width: 300px;
+  text-align: center;
+
+}
+
+.form-container h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: block;
+  color: #333;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  background: linear-gradient(90deg, #8e2de2, #4a00e0);
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.results-container {
+  background-color:  #e0f7fa;
+  padding: 20px;
+  height: 350px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 5px solid #3eafb3;
+  width: 300px;
+  text-align: center;
+}
+
+.results-container h2 {
+  font-size: 22px;
+  color: #333;
+}
+
+.results-container p {
+  font-size: 16px;
+  color: #555;
+}
+</style>
+<body>
+
+  <header>
+    <h1>AI health Guardian</h1>
+    <nav>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'dashboard' %}">dashboard</a>
+      <a href="{% url 'home' %}">signout</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <!-- Scanner Form -->
+    <div class="form-container">
+      <h2>BMI Food Planner</h2>
+      <form method="post">
+        {% csrf_token %}
+        <label for="height">Height (in cm):</label><br>
+        <input type="text" id="height" name="height" required><br><br>
+
+        <label for="weight">Weight (in kg):</label><br>
+        <input type="text" id="weight" name="weight" required><br><br>
+
+        <button type="submit">Predict</button>
+      </form>
+    </div>
+
+    <!-- Results -->
+    <div class="results-container" id="results" style="{% if not prediction and not food_plan %}display: none;{% endif %}">
+        <h2>Results</h2>
+        {% if prediction %}
+            <h2>Predicted BMI Category: {{ prediction }}</h2>
+
+            <h3>Recommended Weekly Food Plan:</h3>
+            <ul>
+                {% for day, meal in food_plan.items %}
+                    <li><strong>{{ day }}:</strong> {{ meal }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('cosmetic-form').addEventListener('submit', function(e) {
+      document.getElementById('loading').style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>
