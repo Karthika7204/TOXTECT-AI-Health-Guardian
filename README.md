@@ -47,3 +47,6 @@ pip install -r requirements.txt
 
 # Run the server
 python manage.py runserver
+
+---
+To refer the Working snapshot refer the Images folder
