@@ -1,0 +1,9 @@
+Django>=4.0
+easyocr
+torch
+Pillow
+opencv-python
+numpy
+scikit-learn
+pandas
+matplotlib
